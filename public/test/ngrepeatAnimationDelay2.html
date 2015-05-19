@@ -1,0 +1,98 @@
+<!doctype html>
+<html ng-app="App">
+  <head>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.angularjs.org/1.1.5/angular.min.js"></script>
+    <script>
+      var m = angular.module('App', []);
+
+      m.controller('ExampleCtrl', function($scope) {
+          $scope.items = [];
+            
+            $scope.addItems = function() {
+              $scope.items = [
+              {name: "Apple"},
+              {name: "Orange"},
+              {name: "Banana"},
+              {name: "Lemon"},
+              {name: "Lime"},
+              {name: "Melon"},
+              {name: "Tangerine"}
+              ];
+            }
+      });
+
+    </script>
+    <style>
+        
+        ul {
+          list-style-type: none;
+          position:relative;
+        }
+       
+        li {
+          background-color:#e3e3e3;
+          color: #666;
+          font-family:Arial;
+          padding:1em;
+          margin:0 5px 5px 5px;
+          text-align: center;
+          text-transform: uppercase;
+        }
+
+        .insert-enter {
+           opacity: 0;
+          -webkit-transform: translate3d(0, -100%, 0);
+          transform: translate3d(0, -100%, 0);
+          
+          -webkit-transition-property: all;
+          -webkit-transition-timing-function: ease-out-cubic;
+          -webkit-transition-duration: 400ms;
+        }
+        .insert-enter.insert-enter-active {
+          /*-webkit-transform:scale(1);*/
+          
+            opacity: 1;
+            -webkit-transform: none;
+            transform: none;
+
+        }
+        .vmDivBase{
+        	float:left;
+        	height:230px;
+        	width:215px;
+        	margin-left:10px;
+        	margin-top:10px;
+        	padding-left:5px;
+        	/* position:relative;
+        	z-index:1;  */
+        	background-color:#7D9DFF; 
+        
+        }
+        
+       
+
+    </style>
+
+  </head>
+  <body>
+  
+    <div ng-controller="ExampleCtrl" >
+        <button ng-click="addItems()">Add Items</button>
+        <!--<ul>
+          <li ng-repeat="item in items" 
+              ng-animate="{enter:'insert-enter'}"
+              style="-webkit-transition-delay:{{$index * 500}}ms">  
+                {{item.name}}  
+          </li> 
+        </ul>--> 
+        <div class="vmDivBase" ng-repeat="item in items" 
+              ng-animate="{enter:'insert-enter'}"
+              style="-webkit-transition-delay:{{$index * 300}}ms">
+          {{item.name}}
+        </div>
+    
+</div>
+
+  </body>
+</html>

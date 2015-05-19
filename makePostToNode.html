@@ -1,0 +1,27 @@
+<html>
+<head><title>makeposttonoed</title>
+<script type="text/javascript">
+
+/*var a = '[{"xx":"11"},{"haha":"22"}]';
+var b = JSON.parse(a);
+
+alert(b[0].xx);*/
+//var btn = document.getElementById('#btn1');
+//alert(btn.name);
+//alert("hello");
+function cli(){
+alert("helllo");
+var btn = document.getElementById('in');
+alert(btn.name + btn.value);
+}
+</script>
+</head>
+<body>
+<form action="http://10.30.176.219:3000/labsInfo" method="POST">
+	name:<input id="in" type="text" name="test"></input>
+	<input type="submit" value="submit" />
+</form>
+<button id="btn1" name="lala" onclick="cli();">pppp</button>
+</body>
+
+</html>

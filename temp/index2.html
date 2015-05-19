@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Monitor Labs</title>
+  
+    <link href="../lib/cui-2.6.0/css/cui.min.css" rel="stylesheet" />
+	<link href="../public/css/show.css" rel="stylesheet" />
+	<link href="../public/css/animate.css" rel="stylesheet" />
+	<script src="../lib/cui-2.6.0/js/cui-vendor.min.js"></script>
+	<script src="../lib/cui-2.6.0/js/cui.min.js"></script>
+	<script src="../public/js/filter.js"></script>
+
+    <script src="../public/js/app.js"></script>
+</head>
+<body ng-app="app">
+	
+	<div ng-controller="AppCtrl">
+	  <div class="head">
+		<h2 align="center">Monitor Labs App</h2>
+	  </div>
+	  <br />
+	  Labs:
+	  <ui-select ng-model="person.selected" style="min-width: 300px;" ng-disabled='disabled' on-select="showAllVMS($select.selected.domainName);">
+		<ui-select-match placeholder="Select a lab in list or search his name">{{$select.selected.domainName}}</ui-select-match>
+		<ui-select-choices repeat="person in people | propsFilter: {domainName: $select.search}">
+		  <div ng-bind-html="person.domainName | highlight: $select.search"></div>	  
+		</ui-select-choices>
+	  </ui-select>
+	  <cui-checkbox name='disabledCheck' ng-model='disabled'>Disable ui-select</cui-checkbox>
+	  <p />
+	  <div class="selectV">
+		<span>You Selected: {{person.selected.domainName}}</span>
+		<div class="vmsFilter">
+		<span >available:&nbsp&nbsp</span>
+			<select ng-model="available">			
+				<option value="true">TRUE</option>
+				<option value="false">FALSE</option>
+				<option value="excep">EXCEP</option>
+				<option value="all">ALL</option>
+			</select>
+		</div>
+	  </div>
+	  
+	  
+	  <hr />  
+		<iframe id="downloadFrame" style="display:none"></iframe>
+		<div class="vmDivBase" ng-repeat="vm in vms | vmsFilter:['ClientName','State']:available | orderBy:orderProp" 
+			ng-class="{vmDivBusy:vm.ClientName !='' && vm.ClientName != null,vmDivException:vm.State != 'Active' }">
+				<h3><strong>{{vm.ComputerName}}</strong></h3>
+				<ul style="list-style-type:disc">
+					<li>
+						<font size="4">clientName:</font>&nbsp{{vm.ClientName}}
+						<!-- <div ng-if="vm.ClientName==null || vm.ClientName==''" hide-login="hideDownloadPop()">
+							<a href="" ng-click="downloadRDPFile(vm)">Connect</a>
+						</div> -->
+						<a style="float:right" ng-if="vm.ClientName==null || vm.ClientName==''" hide-login="hideDownloadPop()" href="" ng-click="showDownloadRDPPop(vm)">Connect</a>
+					</li>
+					<li>
+						<p><font size="4">historyUser:</font></p>
+						<div ng-repeat="user in vm.historyUsers | filter:'' | limitTo:1">
+							<ul style="list-style-type:circle">
+								<li>{{user.ClientName}}&nbsp&nbsp&nbsp&nbsp<font size="1" style="italic">{{user.timeDifference}}</font></li>
+							</ul>
+						</div>
+						<div class="showMoreUsers" ng-if="vm.historyUsers.length > 1" hide-login="hideUsersPop()">
+							<a href="" ng-click="showRemainUsers(vm)">more</a>
+						</div>
+										
+					</li>							
+				</ul>
+				<div class="moreUsersPop animated zoIn" ng-if="showPop && vm.ComputerName==showPopComputerName && vm.historyUsers.length > 1" hide-login="hideUsersPop()">
+					<ul style="list-style-type:circle">
+						<li ng-repeat="remainingUsers in remainingHistoryUsers">
+							{{remainingUsers.ClientName}}&nbsp&nbsp&nbsp&nbsp<font size="1" style="italic">{{remainingUsers.timeDifference}}</font>
+						</li>
+					</ul>
+					<div class="buttonDiv">
+						<button name="btn1" ng-click="hideUsersPop()">OK</button>
+					</div>
+				
+				</div>
+				
+				<div class="moreUsersPop animated flipY" ng-if="isShowDownloadPop && vm.ComputerName==downloadRDPFileCurrentCom" hide-login="hideDownloadPop()">
+					<h3>Do you want to connect the vm by RDP ?</h3>
+					<div class="buttonDiv">
+						<button name="downloadRDP" ng-click="downloadRDPFile(vm)">Download RDP File</button>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!-- <div class="vmDivBase" ng-repeat="vm in vms" 
+              ng-animate="{enter:'insert-enter'}"
+              style="-webkit-transition-delay:{{$index * 300}}ms">
+          {{vm.ComputerName}}
+        </div> -->
+	
+	<!-- <h1 class="animated infinite bounce">Example</h1> -->
+	<!-- <div class="animated fadeInDown" style="background-color:red;width:100px;height:200px">
+		<input type="button" value="btn" />
+	</div> -->
+	
+</body>
+</html>
