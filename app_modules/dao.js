@@ -22,16 +22,14 @@ connection.query('create table IF NOT EXISTS vmsInfo(ID int(11),SessionID int(3)
 });
 
 exports.getVMSByDomainName = function(res,data){
-	console.log(data);
 	var jsData = JSON.parse(data);
 	console.log(jsData['domainName']);
 	connection.query('use labsInfo;');
 	connection.query('select ComputerName,ClientName,State,DomainName from vmsInfo a where a.domainName=? and create_time = (\
-	select create_time from vmsInfo b where b.domainName=a.domainName order by create_time desc limit 1)',[jsData.domainName],function(err,rows,fields){				
-		console.log(rows);			
+	select create_time from vmsInfo b where b.domainName=a.domainName order by create_time desc limit 1)',[jsData.domainName],function(err,rows,fields){					
 		var vms = rows;
 		addHistoryUsersToVMS(vms,function(results){
-			console.log(results);
+			//console.log(JSON.stringify(results));
 			res.end(JSON.stringify(results));
 		})
 		
@@ -65,7 +63,6 @@ exports.getDomainName = function(res){
 	connection.query('use labsInfo;');
 	connection.query('select distinct domainName from vmsInfo;',function(err,rows,fields){
 		var retStr = JSON.stringify(rows);
-		console.log(retStr);
 		res.end(retStr);
 	});
 };

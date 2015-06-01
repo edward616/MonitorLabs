@@ -44,7 +44,7 @@
 	  
 	  <hr />  
 		<iframe id="downloadFrame" style="display:none"></iframe>
-		<div class="vmDivBase" ng-repeat="vm in vms | vmsFilter:['ClientName','State']:available | orderBy:orderProp" 
+		<div id="vmDiv" class="vmDivBase ng-enter" ng-repeat="vm in vms | vmsFilter:['ClientName','State']:available | orderBy:orderProp" 
 			ng-class="{vmDivBusy:vm.ClientName !='' && vm.ClientName != null,vmDivException:vm.State != 'Active' }">
 				<h3><strong>{{vm.ComputerName}}</strong></h3>
 				<ul style="list-style-type:disc">

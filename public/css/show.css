@@ -33,10 +33,10 @@ h2{
 	background-color:#94FF94;
 	/* position:relative;
 	z-index:1;  */
-	-webkit-animation-duration: 1s;
+	/*-webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
+  animation-fill-mode: both;*/
 }
 .vmDivBusy{
 	background-color:#FF66A3
@@ -138,16 +138,20 @@ h2{
  transform: none;
 }
 
-.vmDivBase.ng-enter{
+/*.vmDivBase.ng-enter{
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
 }
 .vmDivBase.ng-leave{
-	-webkit-animation-name: fadeOutDown;
-	animation-name: fadeOutDown;
-	-webkit-animation-duration: 0.005s;
-	animation-duration: 0.005s;
-}
+	-webkit-animation-name: fadeOut;
+	animation-name: fadeOut;
+	-webkit-animation-duration: 0.0005s;
+	animation-duration: 0.0005s;
+}*/
 
 
 

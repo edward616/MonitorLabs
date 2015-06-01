@@ -10,28 +10,31 @@
 			   $scope.people = data;		   
 		   })
 	   };
-	   $scope.getPeoples();
-	   		   
+	   $scope.getPeoples();	    
 	   $scope.showAllVMS = function(domainName){
-		   $scope.vms = [];
-		   $scope.available = "all";
-		   var method = "POST";
-		   var url = "/labsInfo/getVMSByDomainName";
-		   var fromData = {'domainName':domainName};
-		   var jsonData = JSON.stringify(fromData);
-		   
-		   $http({
-			   method:method,
-			   url:url,	
-			   data: jsonData,		   
-			   headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-		   }).success(function(data,status){
-			   console.log("success");			   
-			   $scope.vms = data;
+		   	if(domainName != undefined){
+		   	   $scope.currentDN = domainName;
+			   $scope.vms = [];
+			   //$scope.available = "all";
+			   var method = "POST";
+			   var url = "/labsInfo/getVMSByDomainName";
+			   var fromData = {'domainName':domainName};
+			   var jsonData = JSON.stringify(fromData);
 			   
-		   });		    
+			   $http({
+				   method:method,
+				   url:url,	
+				   data: jsonData,		   
+				   headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			   }).success(function(data,status){
+				   console.log("success");			   
+				   $scope.vms = data;
+				   
+			   });	
+		   	} 
 	   };
-	   
+	   setInterval(function(){ $scope.$apply($scope.showAllVMS($scope.currentDN));},10000);
+
 	   $scope.showPop = false;
 	   $scope.showRemainUsers = function(vm){
 		   $scope.isShowDownloadPop = false;
