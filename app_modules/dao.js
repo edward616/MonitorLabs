@@ -39,9 +39,8 @@ exports.getVMSByDomainName = function(res,data){
 var addHistoryUsersToVMS = function(vms,callback){
 	var vmsLen = vms.length;
 	var results = [];
-	for(var i in vms){
-		(function(vm){		
-			var cName = vm.ComputerName;
+	vms.forEach(function(vm){
+		var cName = vm.ComputerName;
 			var sql = "select ClientName,CAST(create_time AS CHAR(30)) create_time from vmsInfo a where a.ComputerName=? and a.ClientName is not NULL and a.ClientName !='' \
 			and create_time < (select create_time from vmsInfo b where b.ComputerName=a.ComputerName order by create_time desc limit 1);";
 			connection.query(sql,[cName],function(err,rows,fields){
@@ -55,8 +54,8 @@ var addHistoryUsersToVMS = function(vms,callback){
 					callback(results);
 				}
 			});
-		})(vms[i]);	
-	}	
+
+	});
 }
 
 exports.getDomainName = function(res){
